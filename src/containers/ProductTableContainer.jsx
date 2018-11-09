@@ -1,40 +1,53 @@
 import React from 'react';
-import ProductService from '../services/productService';
 import ProductList from '../components/ProductList';
+import ProductStore from '../data/stores/ProductStore';
+import ProductActions from '../data/actions/ProductActions';
 
 export default class ProductTableContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       products: null,
+      error: null,
     };
-    this.productService = new ProductService(props.apiUrl);
+    this.onChange = this.onChange.bind(this);
   }
 
-  componentDidMount = () => {
-    const { products } = this.state;
-    if (!products) {
-      (async () => {
-        try {
-          const productList = await this.productService.getProducts();
-          console.log('list', productList);
-          this.setState({ products: productList.selectedProducts });
-        } catch (ex) {
-          console.log('got an error ', ex);
-        }
-      })();
-    }
+  componentWillMount = () => {
+    ProductStore.addChangeListener(this.onChange);
+  };
+
+  componentDidMount = async () => {
+    await ProductActions.getProducts();
+  };
+
+  componentWillUnmount = () => {
+    ProductStore.removeChangeListener(this.onChange);
+  };
+
+  onChange = () => {
+    this.setState({
+      products: ProductStore.getProducts().selectedProducts,
+    });
+  };
+
+  componentDidCatch = () => {
+    this.setState({
+      error: ProductStore.getError(),
+    });
   };
 
   render = () => {
-    const { products } = this.state;
+    const { products, error } = this.state;
 
     return (
       <div className="col-sm-12">
-        {!products ? (
-          <em>Loading products...</em>
-        ) : (
+        {error ? <em>Error Occurred: {error}</em> : null}
+
+        {products ? (
           <ProductList products={products} />
+        ) : (
+          <em>Loading products...</em>
         )}
       </div>
     );

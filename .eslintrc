@@ -18,6 +18,8 @@
     "react/jsx-one-expression-per-line": "off",
     "no-console": [0, ""],
     "array-callback-return": "off",
-    "consistent-return": "off"
+    "consistent-return": "off",
+    "no-underscore-dangle": "off",
+    "no-nested-ternary": "off"
   }
 }

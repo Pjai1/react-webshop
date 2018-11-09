@@ -6,12 +6,12 @@ export default class ProductService {
   }
 
   getProducts = async () => {
-    try {
-      const res = await axios.get(`${this.apiUrl}/products`);
-      console.log(res.data);
-      return res.data;
-    } catch (ex) {
-      console.log(ex);
-    }
+    // try {
+    const res = await axios.get(`${this.apiUrl}/products`);
+    console.log(res.data);
+    return res.data;
+    // } catch (ex) {
+    //   console.log(ex);
+    // }
   };
 }
