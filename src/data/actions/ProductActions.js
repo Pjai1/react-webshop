@@ -20,4 +20,18 @@ export default {
       });
     }
   },
+  saveProduct: async productDto => {
+    try {
+      const product = await productService.saveProduct(productDto);
+      AppDispatcher.dispatch({
+        actionType: ProductConstants.SAVE_PRODUCT,
+        product,
+      });
+    } catch (ex) {
+      AppDispatcher.dispatch({
+        actionType: ProductConstants.SAVE_PRODUCT_FAILURE,
+        error: ex,
+      });
+    }
+  },
 };

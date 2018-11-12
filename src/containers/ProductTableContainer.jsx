@@ -9,8 +9,8 @@ export default class ProductTableContainer extends React.Component {
     this.state = {
       products: null,
       error: null,
+      hasError: false,
     };
-    this.onChange = this.onChange.bind(this);
   }
 
   componentWillMount = () => {
@@ -27,27 +27,35 @@ export default class ProductTableContainer extends React.Component {
 
   onChange = () => {
     this.setState({
-      products: ProductStore.getProducts().selectedProducts,
+      products: ProductStore.getProducts()
+        ? ProductStore.getProducts().selectedProducts
+        : null,
+      error: ProductStore.getError() ? ProductStore.getError().message : null,
     });
   };
 
-  componentDidCatch = () => {
-    this.setState({
-      error: ProductStore.getError(),
-    });
+  static getDerivedStateFromError = error => {
+    console.log('the error', error);
+    return { hasError: true };
+  };
+
+  componentDidCatch = (error, info) => {
+    console.log('something went wrong', error, info);
   };
 
   render = () => {
-    const { products, error } = this.state;
+    const { products, error, hasError } = this.state;
 
-    return (
+    return hasError ? (
+      <p>Something awful happened</p>
+    ) : (
       <div className="col-sm-12">
-        {error ? <em>Error Occurred: {error}</em> : null}
-
-        {products ? (
-          <ProductList products={products} />
-        ) : (
+        {error ? (
+          <p>Error Occurred: {error}</p>
+        ) : !products ? (
           <em>Loading products...</em>
+        ) : (
+          <ProductList products={products} />
         )}
       </div>
     );

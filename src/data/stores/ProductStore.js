@@ -5,10 +5,15 @@ import ProductConstants from '../constants/ProductConstants';
 const CHANGE_EVENT = 'change';
 
 let _products = [];
+let _product;
 let _error;
 
 const setProducts = products => {
   _products = products;
+};
+
+const setProduct = product => {
+  _product = product;
 };
 
 const setError = error => {
@@ -30,6 +35,8 @@ class ProductStore extends EventEmitter {
 
   getProducts = () => _products;
 
+  getProduct = () => _product;
+
   getError = () => _error;
 }
 
@@ -43,6 +50,16 @@ productStore.dispatchToken = AppDispatcher.register(action => {
       break;
 
     case ProductConstants.GET_PRODUCTS_FAILURE:
+      setError(action.error);
+      productStore.emitChange();
+      break;
+
+    case ProductConstants.SAVE_PRODUCT:
+      setProduct(action.product);
+      productStore.emitChange();
+      break;
+
+    case ProductConstants.SAVE_PRODUCT_FAILURE:
       setError(action.error);
       productStore.emitChange();
       break;

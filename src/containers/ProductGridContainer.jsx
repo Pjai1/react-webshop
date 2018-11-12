@@ -9,8 +9,8 @@ export default class ProductGridContainer extends React.Component {
     this.state = {
       products: null,
       error: null,
+      hasError: false,
     };
-    this.onChange = this.onChange.bind(this);
   }
 
   componentWillMount = () => {
@@ -34,10 +34,20 @@ export default class ProductGridContainer extends React.Component {
     });
   };
 
+  static getDerivedStateFromError = error => {
+    console.log('the error', error);
+    return { hasError: true };
+  };
+
+  componentDidCatch = (error, info) => {
+    console.log('something went wrong', error, info);
+  };
+
   render = () => {
-    const { products, error } = this.state;
-    console.log(error);
-    return (
+    const { products, error, hasError } = this.state;
+    return hasError ? (
+      <p>Something awful happened</p>
+    ) : (
       <div className="col-sm-12">
         {error ? (
           <p>Error Occurred: {error}</p>

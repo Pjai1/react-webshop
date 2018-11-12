@@ -5,6 +5,7 @@ import API_URL from './constants';
 import './App.scss';
 import Header from './components/Header';
 import ProductGridContainer from './containers/ProductGridContainer';
+import ProductForm from './components/ProductForm';
 
 export default class App extends React.Component {
   render() {
@@ -21,6 +22,7 @@ export default class App extends React.Component {
             path="/table"
             render={() => <ProductTableContainer apiUrl={API_URL} />}
           />
+          <Route path="/detail" component={ProductForm} />
         </div>
       </div>
     );
