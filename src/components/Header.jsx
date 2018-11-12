@@ -10,6 +10,9 @@ const Header = () => (
       <li className="navbar-brand">
         <Link to="/table">Product List</Link>
       </li>
+      <li className="navbar-brand">
+        <Link to="/detail">New Product</Link>
+      </li>
     </ul>
   </div>
 );

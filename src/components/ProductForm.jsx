@@ -16,6 +16,11 @@ export default class Productform extends React.Component {
     };
   }
 
+  onCancel = () => {
+    const { history } = this.props;
+    history.goBack();
+  };
+
   handleSubmit = async event => {
     event.preventDefault();
     const { sku, title, stocked, price, basePrice, desc } = this.state;
@@ -23,11 +28,12 @@ export default class Productform extends React.Component {
     const product = {
       sku,
       title,
-      price: Number(price),
-      basePrice: Number(basePrice),
+      price: price ? Number(price) : null,
+      basePrice: price ? Number(basePrice) : null,
       desc,
-      stocked: !!stocked,
+      stocked: stocked ? !!stocked : null,
     };
+    console.log(product);
     await ProductActions.saveProduct(product);
     if (ProductStore.getError()) {
       this.setState({
@@ -115,14 +121,15 @@ export default class Productform extends React.Component {
           />
         </div>
         <div className="button-grid">
-          <button type="button" className="btn btn-primary">
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={this.onCancel}
+          >
             Cancel
           </button>
           <button type="submit" className="btn btn-success">
             Save
-          </button>
-          <button type="button" className="btn btn-danger">
-            Delete
           </button>
         </div>
       </form>

@@ -2,19 +2,23 @@ import React from 'react';
 import ProductGrid from '../components/ProductGrid';
 import ProductStore from '../data/stores/ProductStore';
 import ProductActions from '../data/actions/ProductActions';
+import { AppContext } from '../context';
+import withProps from '../withProps';
 
-export default class ProductGridContainer extends React.Component {
+class ProductGridContainer extends React.Component {
+  static contextType = AppContext;
+
   constructor(props) {
     super(props);
     this.state = {
       products: null,
       error: null,
-      hasError: false,
     };
   }
 
   componentWillMount = () => {
     ProductStore.addChangeListener(this.onChange);
+    console.log(this.context);
   };
 
   componentDidMount = async () => {
@@ -34,20 +38,9 @@ export default class ProductGridContainer extends React.Component {
     });
   };
 
-  static getDerivedStateFromError = error => {
-    console.log('the error', error);
-    return { hasError: true };
-  };
-
-  componentDidCatch = (error, info) => {
-    console.log('something went wrong', error, info);
-  };
-
   render = () => {
-    const { products, error, hasError } = this.state;
-    return hasError ? (
-      <p>Something awful happened</p>
-    ) : (
+    const { products, error } = this.state;
+    return (
       <div className="col-sm-12">
         {error ? (
           <p>Error Occurred: {error}</p>
@@ -60,3 +53,5 @@ export default class ProductGridContainer extends React.Component {
     );
   };
 }
+
+export default withProps(ProductGridContainer);
