@@ -1,3 +1,3 @@
-const API_URL = 'http://localhost:3000/api';
+const API_URL = 'https://euri-test-api.now.sh/api';
 
 export default API_URL;
