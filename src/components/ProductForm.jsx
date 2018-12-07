@@ -16,6 +16,10 @@ export default class Productform extends React.Component {
     };
   }
 
+  componentDidMount() {
+    console.log(this.props);
+  }
+
   onCancel = () => {
     const { history } = this.props;
     history.goBack();

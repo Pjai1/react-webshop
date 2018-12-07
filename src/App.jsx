@@ -11,31 +11,31 @@ import ErrorBoundary from './components/ErrorBoundary';
 export default class App extends React.Component {
   render() {
     return (
-      <AppProvider>
-        <div className="container-grid">
-          <Header />
-          <div>
-            <Route
-              path="/"
-              exact
-              render={() => (
-                <ErrorBoundary>
-                  <ProductGridContainer property="the best prop ever" />
-                </ErrorBoundary>
-              )}
-            />
-            <Route
-              path="/table"
-              render={() => (
-                <ErrorBoundary>
-                  <ProductTableContainer />
-                </ErrorBoundary>
-              )}
-            />
-            <Route path="/detail" component={ProductForm} />
-          </div>
+      // <AppProvider>
+      <div className="container-grid">
+        <Header />
+        <div>
+          <Route
+            path="/"
+            exact
+            render={() => (
+              <ErrorBoundary>
+                <ProductGridContainer property="the best prop ever" />
+              </ErrorBoundary>
+            )}
+          />
+          <Route
+            path="/table"
+            render={() => (
+              <ErrorBoundary>
+                <ProductTableContainer />
+              </ErrorBoundary>
+            )}
+          />
+          <Route path="/detail" component={ProductForm} />
         </div>
-      </AppProvider>
+      </div>
+      // </AppProvider>
     );
   }
 }
