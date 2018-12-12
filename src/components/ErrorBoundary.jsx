@@ -23,7 +23,7 @@ export default class ErrorBoundary extends React.Component {
     const { hasError, error, errorInfo } = this.state;
     const { children } = this.props;
     return hasError ? (
-      <p>
+      <p id="error-text">
         Error Occurred with: {error} and {errorInfo}
       </p>
     ) : (

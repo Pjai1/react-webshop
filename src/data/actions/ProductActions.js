@@ -23,6 +23,7 @@ export default {
   saveProduct: async productDto => {
     try {
       const product = await productService.saveProduct(productDto);
+      console.log('saving', product);
       AppDispatcher.dispatch({
         actionType: ProductConstants.SAVE_PRODUCT,
         product,

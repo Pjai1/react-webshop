@@ -39,7 +39,7 @@ class ProductTableContainer extends React.Component {
     return (
       <div className="col-sm-12">
         {error ? (
-          <p>Error Occurred: {error}</p>
+          <p id="error-text">Error Occurred: {error}</p>
         ) : !products ? (
           <em>Loading products...</em>
         ) : (

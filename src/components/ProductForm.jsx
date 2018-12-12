@@ -35,7 +35,7 @@ export default class Productform extends React.Component {
       price: price ? Number(price) : null,
       basePrice: price ? Number(basePrice) : null,
       desc,
-      stocked: stocked ? !!stocked : null,
+      stocked: stocked ? !!stocked : false,
     };
     console.log(product);
     await ProductActions.saveProduct(product);
@@ -67,6 +67,7 @@ export default class Productform extends React.Component {
         <div className="form-group">
           <label htmlFor="sku">Sku</label>
           <input
+            autoFocus
             type="text"
             className="form-control"
             id="sku"
